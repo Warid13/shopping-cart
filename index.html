@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+
+            <div id="items_portion">
+
+               
+               <div class="cart-item" id="item1_cart">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default" id="btn_minus_i1"><i class="fas fa-minus"></i></button>
+                           <input type="text" id="item_1_input" class="form-control text-center"  value="1"  oninput="this.value = this.value.replace(/[^1-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly />
+                           <button class="btn btn-default" id="btn_plus_i1"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="item1_money">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item" id="item1_dlt_btn">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item" id="item2_cart">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default" id="btn_minus_i2"><i class="fas fa-minus"></i></button>
+                           <input type="text" id="item_2_input" class="form-control text-center" value="1" oninput="this.value = this.value.replace(/[^1-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly /> 
+                           <button class="btn btn-default" id="btn_plus_i2"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id="item2_money">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item" id="item2_dlt_btn">
+                     </div>
+                  </div>
+               </div>
+            </div>
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax: <span id="tax-nb">( 5% if Subtotal is more than $1300 ) </span> </h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id ="subtotal_text">1,278</span></h5>
+                        <h5>$ <span id="tax_text">0</span></h5>
+                        <h5>$ <span id="total_text" value = "1278">1,278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button id="checkout_btn" type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+               <div id="user_info">
+                  <input type="text" id="user_name_text" class="form-control" placeholder="Enter Your Name">
+                  <br>
+                  <input type="text" id="user_address_text" class="form-control" placeholder="Enter Your delivery Address">
+                  <br>
+                  <button id="confirm_btn" type="button" class="btn btn-success check-out">Confirm</button>
+         
+               </div>
+            </div>
+         </div>
+      </div>
+
+     
+   </section>
+
+   
+
+   <script>
+
+      var check=0;
+      var item1_rate = 0;
+      var item2_rate = 0;
+      var total_item1_money = 0;
+      var total_item2_money = 0;
+      var tax = 0;
+      
+      const btn_minus_i1 = document.getElementById("btn_minus_i1");
+      btn_minus_i1.addEventListener("click", function(){
+         getItemQuantity("item_1_input", -1, "item1_money")
+         
+      })
+
+
+      const btn_plus_i1 = document.getElementById("btn_plus_i1");
+      btn_plus_i1.addEventListener("click", function(){
+         getItemQuantity("item_1_input", 1, "item1_money")
+      })
+
+      const btn_minus_i2 = document.getElementById("btn_minus_i2");
+      btn_minus_i2.addEventListener("click", function(){
+         getItemQuantity("item_2_input", -1, "item2_money")
+         
+         //console.log(btn_minus_i2);
+      })
+
+      const btn_plus_i2 = document.getElementById("btn_plus_i2");
+      btn_plus_i2.addEventListener("click", function(){
+         getItemQuantity("item_2_input", 1, "item2_money")
+         
+         //console.log(btn_minus_i2);
+      })
+
+
+      const checkout_btn = document.getElementById("checkout_btn");
+         checkout_btn.addEventListener("click", function(){
+             var checkTotal = document.getElementById("total_text").value;
+           
+               const items_portion = document.getElementById("items_portion");
+               items_portion.style.display = "none";
+               checkout_btn.style.display = "none";
+               const user_info_portion = document.getElementById("user_info");
+               user_info_portion.style.display = "block";
+            
+            
+         })
+
+      const confirm_btn = document.getElementById("confirm_btn");
+      confirm_btn.addEventListener("click", function(){
+         
+         const user_name = document.getElementById("user_name_text").value;
+         console.log(user_name);
+         window.alert(
+            "Thanks " + user_name + " for shoping from us."
+         );
+      })
+
+      const dlt_item1 = document.getElementById("item1_dlt_btn");
+      dlt_item1.addEventListener("click", function(){
+         const item1_cart = document.getElementById("item1_cart");
+         
+         item1_cart.style.display = "none";
+         total_item1_money =0;
+         tax = 0;
+         document.getElementById("item1_money").innerText = 0;
+         getItemQuantity("item_1_input", 0, "0")
+
+      })
+
+      const dlt_item2 = document.getElementById("item2_dlt_btn");
+      dlt_item2.addEventListener("click", function(){
+         const item2_cart = document.getElementById("item2_cart");
+         
+         item2_cart.style.display = "none";
+         total_item2_money =0;
+         tax = 0;
+         document.getElementById("item2_money").innerText = 0;
+         getItemQuantity("item_2_input", 0, "0")
+
+      })
+
+      function getItemQuantity(quantity_id, sign, money_id)
+      {
+         
+         const currentInput = document.getElementById(quantity_id).value;
+         var updateCurrentInput = parseInt(currentInput);
+         if(updateCurrentInput >0)
+         {
+            updateCurrentInput= updateCurrentInput+(1*sign);
+            if(updateCurrentInput == 0)
+            {
+               updateCurrentInput =1;
+            }
+            //console.log(updateCurrentInput);
+            document.getElementById(quantity_id).value = updateCurrentInput;
+
+            check++;
+
+            if(check <=1)
+            {  
+                  item1_rate = parseInt(document.getElementById("item1_money").innerText);
+                  item2_rate = parseInt(document.getElementById("item2_money").innerText);     
+                  total_item1_money = item1_rate;
+                  total_item2_money = item2_rate;       
+            }
+
+            if(money_id == "item1_money")
+            {
+               total_item1_money = item1_rate * updateCurrentInput;
+               document.getElementById("item1_money").innerText = total_item1_money;
+            }
+
+            if(money_id == "item2_money")
+            {
+               total_item2_money = item2_rate * updateCurrentInput;
+               document.getElementById("item2_money").innerText = total_item2_money;
+            }                    
+         }
+
+         const subtotal = parseInt(total_item1_money+ total_item2_money);
+         document.getElementById("subtotal_text").innerText = subtotal;
+         if(subtotal>1300)
+         {
+            tax = parseFloat((subtotal * 0.05).toFixed(2));
+         }
+         
+         document.getElementById("tax_text").innerText = tax;
+         const total = subtotal + tax;
+         document.getElementById("total_text").innerText = total;
+         
+
+
+
+      }
+
+
+
+
+   </script>
+
+
+
+
+</body>
+
+</html>
